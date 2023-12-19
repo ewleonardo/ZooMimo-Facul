@@ -4,18 +4,22 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs';
 import { Product } from '../api/product';
+import { Pet } from '../api/pet.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ProductService {
-    private basePath = "products"
+export class PetService {
+    getPets() {
+        throw new Error('Method not implemented.');
+    }
+    private basePath = "pets"
 
     constructor(private db: AngularFireDatabase) { }
 
     // Implementado
-    getProducts() {
-        return this.db.list<Product>(this.basePath)
+    getPet() {
+        return this.db.list<Pet>(this.basePath)
             .snapshotChanges().pipe(
                 map(changes =>
                     changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
@@ -23,20 +27,20 @@ export class ProductService {
             );
     }
 
-    getProductId(key: string): Observable<Product> {
-        return this.db.object<Product>(`${this.basePath}/${key}`).valueChanges();
+    getPetId(key: string): Observable<Pet> {
+        return this.db.object<Pet>(`${this.basePath}/${key}`).valueChanges();
     }
 
-    createProduct(product: Product): any {
-        return this.db.list<Product>(this.basePath).push(product);
+    createPet(pet: Pet): any {
+        return this.db.list<Pet>(this.basePath).push(pet);
     }
 
-    updateProduct(key: string, value: any): Promise<void> {
-        return this.db.object<Product>(`${this.basePath}/${key}`).update(value);
+    updatePet(key: string, value: any): Promise<void> {
+        return this.db.object<Pet>(`${this.basePath}/${key}`).update(value);
     }
 
-    deleteProduct(key: string): Promise<void> {
-        return this.db.object<Product>(`${this.basePath}/${key}`).remove();
+    deletePet(key: string): Promise<void> {
+        return this.db.object<Pet>(`${this.basePath}/${key}`).remove();
     }
     // Fim Implementado
 }
