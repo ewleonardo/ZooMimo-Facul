@@ -7,6 +7,8 @@ export interface Tutor {
     key?: string;
     code?: string;
     name?: string;
+    cep?: string;
+    numero?: string;
     description?: string;
     price?: number;
     quantity?: number;

@@ -8,7 +8,7 @@ import { Tutor } from '../api/tutor.model';
     providedIn: 'root'
 })
 export class TutorService {
-    private basePath = "products"
+    private basePath = "tutores"
 
     constructor(private db: AngularFireDatabase) { }
 

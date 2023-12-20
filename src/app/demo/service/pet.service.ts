@@ -8,7 +8,7 @@ import { Pet } from '../api/pet.model';
     providedIn: 'root'
 })
 export class PetService {
-    private basePath = "products"
+    private basePath = "pets"
 
     constructor(private db: AngularFireDatabase) { }
 

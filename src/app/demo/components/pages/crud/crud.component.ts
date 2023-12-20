@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/demo/api/product';
-import { Pet } from 'src/app/demo/api/pet.model';
 import { Tutor } from 'src/app/demo/api/tutor.model';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { ProductService } from 'src/app/demo/service/product.service';
-import { PetService } from 'src/app/demo/service/pet.service';
 import { TutorService } from 'src/app/demo/service/tutor.service';
 import { CEPError, Endereco, NgxViacepService } from "@brunoc/ngx-viacep"; // Importando o viacep
 import { catchError, EMPTY } from 'rxjs';
@@ -17,17 +13,17 @@ import { catchError, EMPTY } from 'rxjs';
 
 export class CrudComponent implements OnInit {
 
-    petDialog: boolean = false;
+    tutorDialog: boolean = false;
 
-    deletePetDialog: boolean = false;
+    deleteTutorDialog: boolean = false;
 
-    deletePetsDialog: boolean = false;
+    deleteTutorsDialog: boolean = false;
 
-    pets: Pet[] = [];
+    tutors: Tutor[] = [];
 
-    pet: Pet = {};
+    tutor: Tutor = {};
 
-    selectedPets: Pet[] = [];
+    selectedTutors: Tutor[] = [];
 
     submitted: boolean = false;
 
@@ -37,13 +33,13 @@ export class CrudComponent implements OnInit {
 
     rowsPerPageOptions = [5, 10, 20];
 
-    constructor(private viacep: NgxViacepService, private petService: PetService, private messageService: MessageService) { }
+    constructor(private viacep: NgxViacepService, private tutorService: TutorService, private messageService: MessageService) { }
 
     ngOnInit() {
-        this.petService.getPets().subscribe(data => this.pets = data);
+        this.tutorService.getTutors().subscribe(data => this.tutors = data);
 
         this.cols = [
-            { field: 'product', header: 'Pet' },
+            { field: 'product', header: 'Tutor' },
             { field: 'price', header: 'Price' },
             { field: 'category', header: 'Category' },
             { field: 'rating', header: 'Reviews' },
@@ -57,80 +53,78 @@ export class CrudComponent implements OnInit {
         ];
 
         setTimeout(() => {
-            console.log(this.pets);
+            console.log(this.tutors);
         }, 3000);
     }
 
     openNew() {
-        this.pet = {};
+        this.tutor = {};
         this.submitted = false;
-        this.petDialog = true;
+        this.tutorDialog = true;
     }
 
-    deleteSelectedPets() {
-        this.deletePetsDialog = true;
+    deleteSelectedTutors() {
+        this.deleteTutorsDialog = true;
     }
 
-    editPet(pet: Pet) {
-        this.pet = { ...pet };
-        this.petDialog = true;
+    editTutor(tutor: Tutor) {
+        this.tutor = { ...tutor };
+        this.tutorDialog = true;
     }
 
-    deletePet(pet: Pet) {
-        this.deletePetDialog = true;
-        this.pet = { ...pet };
+    deleteTutor(tutor: Tutor) {
+        this.deleteTutorDialog = true;
+        this.tutor = { ...tutor };
     }
 
     confirmDeleteSelected() {
-        this.deletePetsDialog = false;
-        // this.pets = this.pets.filter(val => !this.selectedPets.includes(val));
+        this.deleteTutorsDialog = false;
 
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-        this.selectedPets = [];
+        this.selectedTutors = [];
     }
 
     confirmDelete() {
-        this.deletePetDialog = false;
-        // this.pets = this.pets.filter(val => val.id !== this.pet.id);
-        this.petService.deletePet(this.pet.key);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Pet Deleted', life: 3000 });
-        this.pet = {};
+        this.deleteTutorDialog = false;
+        this.tutorService.deleteTutor(this.tutor.key);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Tutor Deleted', life: 3000 });
+        this.tutor = {};
     }
 
     hideDialog() {
-        this.petDialog = false;
+        this.tutorDialog = false;
         this.submitted = false;
     }
 
-    savePet() {
+    saveTutor() {
         this.submitted = true;
 
-        if (this.pet.name?.trim()) {
-            if (this.pet.id) {
+        if (this.tutor.name?.trim()) {
+            if (this.tutor.id) {
                 // @ts-ignore
-                this.pet.sexo = this.pet.sexo.value ? this.pet.sexo.value : this.pet.sexo;
-                // this.pets[this.findIndexById(this.pet.id)] = this.pet;
-                this.petService.updatePet(this.pet.key, this.pet);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Pet Updated', life: 3000 });
+                this.tutor.sexo = this.tutor.sexo.value ? this.tutor.sexo.value : this.tutor.sexo;
+                // this.tutors[this.findIndexById(this.tutor.id)] = this.tutor;
+                this.tutorService.updateTutor(this.tutor.key, this.tutor);
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Tutor Updated', life: 3000 });
             } else {
-                this.pet.id = this.createId();
-                this.petService.createPet(this.pet);
+                this.tutor.id = this.createId();
+                this.tutorService.createTutor(this.tutor);
                 // @ts-ignore
-                this.pet.sexo = this.pet.sexo ? this.pet.sexo.value : 'INSTOCK';
-                // this.pets.push(this.pet);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Pet Created', life: 3000 });
+                this.tutor.sexo = this.tutor.sexo ? this.tutor.sexo.value : 'INSTOCK';
+                // this.tutors.push(this.tutor);
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Tutor Created', life: 3000 });
             }
 
-            this.pets = [...this.pets];
-            this.petDialog = false;
-            this.pet = {};
+            this.tutors = [...this.tutors];
+            this.tutorDialog = false;
+            this.tutor = {};
         }
     }
 
     findIndexById(id: string): number {
         let index = -1;
-        for (let i = 0; i < this.pets.length; i++) {
-            if (this.pets[i].id === id) {
+        for (let i = 0; i < this.tutors.length; i++) {
+            if (this.tutors[i].id === id) {
                 index = i;
                 break;
             }
@@ -176,10 +170,11 @@ export class CrudComponent implements OnInit {
         console.log(endereco, 'CHEGOU NO POPULAR!');
         form.setValue({
             // endereco: {
-                estado: endereco.uf,
-                cidade: endereco.localidade,
-                bairro: endereco.bairro,
-                rua: endereco.logradouro,
+            estado: endereco.uf,
+            cidade: endereco.localidade,
+            bairro: endereco.bairro,
+            rua: endereco.logradouro,
+            numero: null,
             // }
 
         })

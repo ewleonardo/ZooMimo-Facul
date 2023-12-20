@@ -8,7 +8,7 @@
                         <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2"
                             (click)="openNew()"></button>
                         <!-- <button pButton pRipple label="Excluir" icon="pi pi-trash" class="p-button-danger"
-                            (click)="deleteSelectedPets()" [disabled]="!selectedPets || !selectedPets.length"></button> -->
+                            (click)="deleteSelectedTutors()" [disabled]="!selectedTutors || !selectedTutors.length"></button> -->
                     </div>
                 </ng-template>
 
@@ -19,11 +19,11 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="pets" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+            <p-table #dt [value]="tutors" [columns]="cols" responsiveLayout="scroll" [rows]="10"
                 [globalFilterFields]="['name','country.name','representative.name','sexo']" [paginator]="true"
                 [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [(selection)]="selectedPets" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                [(selection)]="selectedTutors" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                         <h5 class="m-0">Gerenciar Tutores</h5>
@@ -49,38 +49,38 @@
                         <th></th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-pet>
+                <ng-template pTemplate="body" let-tutor>
                     <tr>
                         <!-- <td>
-                            <p-tableCheckbox [value]="pet"></p-tableCheckbox>
+                            <p-tableCheckbox [value]="tutor"></p-tableCheckbox>
                         </td> -->
                         <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
-                            {{pet.code || pet.id}}
+                            {{tutor.code || tutor.id}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Name</span>
-                            {{pet.name}}
+                            {{tutor.name}}
                         </td>
                         <td style="width:14%; min-width:8rem;">
                             <span class="p-column-title">CPF</span>
-                            {{pet.cpf }}
+                            {{tutor.cpf }}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Sexo</span>
-                            {{pet.sexo}}
+                            {{tutor.sexo}}
                         </td>
                         <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Estado</span>
-                            {{pet.estado}}
+                            {{tutor.estado}}
                         </td>
                         <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Cidade</span>
-                            {{pet.cidade}}
+                            {{tutor.cidade}}
                         </td>
                         <td>
                             <div class="flex">
                                 <button pButton pRipple icon="pi pi-pencil"
-                                    class="p-button-rounded p-button-success mr-2" (click)="editPet(pet)"></button>
+                                    class="p-button-rounded p-button-success mr-2" (click)="editTutor(tutor)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                                    (click)="deletePet(pet)"></button>
+                                    (click)="deleteTutor(tutor)"></button>
                             </div>
                         </td>
                     </tr>
@@ -88,29 +88,29 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="petDialog" [style]="{width: '450px'}" header="Tutor" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="tutorDialog" [style]="{width: '450px'}" header="Tutor" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
-                <!-- <img [src]="'assets/demo/images/pet/' + pet.image" [alt]="pet.image" width="150"
-                    class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="pet.image"> -->
+                <!-- <img [src]="'assets/demo/images/tutor/' + tutor.image" [alt]="tutor.image" width="150"
+                    class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="tutor.image"> -->
                 <div class="field">
                     <label for="name">Nome</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="pet.name" required autofocus
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.name}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.name">Campo 'Nome' obrigatório.</small>
+                    <input type="text" pInputText id="name" [(ngModel)]="tutor.name" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.name}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.name">Campo 'Nome' obrigatório.</small>
                 </div>
                 <div class="formgrid grid">
                     <div class="field col">
                         <label for="cpf">CPF</label>
-                        <p-inputMask mask="999.999.999-99" [(ngModel)]="pet.cpf" placeholder="000.000.000-00"
+                        <p-inputMask mask="999.999.999-99" [(ngModel)]="tutor.cpf" placeholder="000.000.000-00"
                             name="cpf"></p-inputMask>
                     </div>
                     <div class="field col">
                         <label for="sexo">Sexo</label>
-                        <p-dropdown [(ngModel)]="pet.sexo" inputId="sexo" optionValue="label" [options]="sexoes"
+                        <p-dropdown [(ngModel)]="tutor.sexo" inputId="sexo" optionValue="label" [options]="sexoes"
                             placeholder="Sexo">
                             <ng-template pTemplate="selectedItem">
-                                <span *ngIf="pet && pet.sexo"
-                                    [class]="'product-badge sexo-' + pet.sexo.toString().toLowerCase()">{{pet.sexo}}</span>
+                                <span *ngIf="tutor && tutor.sexo"
+                                    [class]="'product-badge sexo-' + tutor.sexo.toString().toLowerCase()">{{tutor.sexo}}</span>
                             </ng-template>
                             <ng-template let-option pTemplate="item">
                                 <span [class]="'product-badge sexo-' + option.value">{{option.label}}</span>
@@ -121,12 +121,12 @@
                 <div class="formgrid grid">
                     <div class="field col">
                         <label for="telefone">Telefone</label>
-                        <p-inputMask mask="(99) 99999-9999" [(ngModel)]="pet.telefone"
+                        <p-inputMask mask="(99) 99999-9999" [(ngModel)]="tutor.telefone"
                             placeholder="(00) 90000-0000"></p-inputMask>
                     </div>
                     <div class="field col">
                         <label for="cep">CEP</label>
-                        <p-inputMask mask="99999-999" (onBlur)="consultaCEP($event.target.value, f)" [(ngModel)]="pet.cep"
+                        <p-inputMask mask="99999-999" (onBlur)="consultaCEP($event.target.value, f)" [(ngModel)]="tutor.cep"
                             placeholder="00000-000"></p-inputMask>
                     </div>
                 </div>
@@ -135,26 +135,26 @@
                     <div class="formgrid grid">
                         <div class="field col">
                             <label for="estado">Estado</label>
-                            <p-inputMask mask="aa" id="estado" name="estado" [(ngModel)]="pet.estado"></p-inputMask>
+                            <p-inputMask mask="aa" id="estado" name="estado" [(ngModel)]="tutor.estado"></p-inputMask>
                         </div>
                         <div class="field col">
                             <label for="cidade">Cidade</label>
-                            <input type="text" pInputText id="cidade" name="cidade" [(ngModel)]="pet.cidade" />
+                            <input type="text" pInputText id="cidade" name="cidade" [(ngModel)]="tutor.cidade" />
                         </div>
                         <div class="field col">
                             <label for="bairro">Bairro</label>
-                            <input type="text" pInputText id="bairro" name="bairro" [(ngModel)]="pet.bairro" />
+                            <input type="text" pInputText id="bairro" name="bairro" [(ngModel)]="tutor.bairro" />
                         </div>
                     </div>
                     <div class="formgrid grid">
                         <div class="field col">
                             <label for="rua">Rua</label>
-                            <input type="text" pInputText id="rua" name="rua" [(ngModel)]="pet.rua" />
+                            <input type="text" pInputText id="rua" name="rua" [(ngModel)]="tutor.rua" />
                         </div>
                         <div class="field col">
                             <label for="numero">Número</label>
-                            <input type="text" pInputText id="numero" name="numero" [(ngModel)]="pet.numero" />
-                            <!-- [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.numero}" -->
+                            <input type="text" pInputText id="numero" name="numero" [(ngModel)]="tutor.numero" />
+                            <!-- [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.numero}" -->
                         </div>
                     </div>
                 </form>
@@ -164,31 +164,31 @@
                 <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
                     (click)="hideDialog()"></button>
                 <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text"
-                    (click)="savePet()"></button>
+                    (click)="saveTutor()"></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="deletePetDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+        <p-dialog [(visible)]="deleteTutorDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="pet">Are you sure you want to delete <b>{{pet.name}}</b>?</span>
+                <span *ngIf="tutor">Are you sure you want to delete <b>{{tutor.name}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
-                    (click)="deletePetDialog = false"></button>
+                    (click)="deleteTutorDialog = false"></button>
                 <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
                     (click)="confirmDelete()"></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="deletePetsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+        <p-dialog [(visible)]="deleteTutorsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete selected pets?</span>
+                <span>Are you sure you want to delete selected tutors?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
-                    (click)="deletePetsDialog = false"></button>
+                    (click)="deleteTutorsDialog = false"></button>
                 <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
                     (click)="confirmDeleteSelected()"></button>
             </ng-template>
