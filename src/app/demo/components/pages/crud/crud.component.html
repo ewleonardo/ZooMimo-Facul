@@ -5,46 +5,55 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-                        <button pButton pRipple label="Excluir" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedPets()" [disabled]="!selectedPets || !selectedPets.length"></button>
+                        <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="openNew()"></button>
+                        <!-- <button pButton pRipple label="Excluir" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedPets()" [disabled]="!selectedPets || !selectedPets.length"></button> -->
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="right">
                     <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
-                    <button pButton pRipple label="Exportar" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                    <button pButton pRipple label="Exportar" icon="pi pi-upload" class="p-button-help"
+                        (click)="dt.exportCSV()"></button>
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="pets" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedPets" selectionMode="multiple" [rowHover]="true" dataKey="id">
+            <p-table #dt [value]="pets" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+                [globalFilterFields]="['name','country.name','representative.name','sexo']" [paginator]="true"
+                [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedPets" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Gerrenciar Agendamentos</h5>
+                        <h5 class="m-0">Gerenciar Tutores</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Pesquisar..."  class="w-full sm:w-auto"/>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)"
+                                placeholder="Pesquisar..." class="w-full sm:w-auto" />
                         </span>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th style="width: 3rem">
+                        <!-- <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
-                        <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
-                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                        </th> -->
+                        <th pSortableColumn="code">Código <p-sortIcon field="code"></p-sortIcon></th>
+                        <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon></th>
                         <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
                         <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
                         <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th>
-                        <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                        <th pSortableColumn="sexo">Sexo <p-sortIcon field="sexo"></p-sortIcon>
+                        </th>
                         <th></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-pet>
                     <tr>
-                        <td>
+                        <!-- <td>
                             <p-tableCheckbox [value]="pet"></p-tableCheckbox>
-                        </td>
+                        </td> -->
                         <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
                             {{pet.code || pet.id}}
                         </td>
@@ -63,13 +72,16 @@
                         <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Reviews</span>
                             <p-rating [ngModel]="pet.rating" [readonly]="true" [cancel]="false"></p-rating>
                         </td>
-                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
-                            <span [class]="'pet-badge status-' + (pet.inventoryStatus ? pet.inventoryStatus.toLowerCase() : '')">{{pet.inventoryStatus}}</span>
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Sexo</span>
+                            <span
+                                [class]="'product-badge sexo-' + (pet.sexo ? pet.sexo.toLowerCase() : '')">{{pet.sexo}}</span>
                         </td>
                         <td>
                             <div class="flex">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editPet(pet)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deletePet(pet)"></button>
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2" (click)="editPet(pet)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                    (click)="deletePet(pet)"></button>
                             </div>
                         </td>
                     </tr>
@@ -79,58 +91,84 @@
 
         <p-dialog [(visible)]="petDialog" [style]="{width: '450px'}" header="Tutor" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
-                <img [src]="'assets/demo/images/pet/' + pet.image" [alt]="pet.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="pet.image">
+                <!-- <img [src]="'assets/demo/images/pet/' + pet.image" [alt]="pet.image" width="150"
+                    class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="pet.image"> -->
                 <div class="field">
-                    <label for="name">Nome do Tutor</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="pet.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.name}"/>
+                    <label for="name">Nome</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="pet.name" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.name}" />
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.name">Name is required.</small>
                 </div>
-                <div class="field">
-                    <label for="cpf">CPF</label>
-                    <input type="text" pInputText id="cpf" [(ngModel)]="pet.cpf" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.cpf}"/>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="cpf">CPF</label>
+                        <input type="text" pInputText id="cpf" [(ngModel)]="pet.cpf" placeholder="000.000.000-00"
+                            required [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.cpf}" />
+                    </div>
+                    <div class="field col">
+                        <label for="sexo">Sexo</label>
+                        <p-dropdown [(ngModel)]="pet.sexo" inputId="sexo" optionValue="label" [options]="sexoes"
+                            placeholder="Sexo">
+                            <ng-template pTemplate="selectedItem">
+                                <span *ngIf="pet && pet.sexo"
+                                    [class]="'product-badge sexo-' + pet.sexo.toString().toLowerCase()">{{pet.sexo}}</span>
+                            </ng-template>
+                            <ng-template let-option pTemplate="item">
+                                <span [class]="'product-badge sexo-' + option.value">{{option.label}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
                 </div>
-                <div class="field">
-                    <label for="status">Pet Status</label>
-                    <p-dropdown [(ngModel)]="pet.inventoryStatus" inputId="inventoryStatus" optionValue="label" [options]="statuses" placeholder="Select">
-                        <ng-template pTemplate="selectedItem">
-                            <span *ngIf="pet && pet.inventoryStatus" [class]="'pet-badge status-' + pet.inventoryStatus.toString().toLowerCase()">{{pet.inventoryStatus}}</span>
-                        </ng-template>
-                        <ng-template let-option pTemplate="item">
-                            <span [class]="'pet-badge status-' + option.value">{{option.label}}</span>
-                        </ng-template>
-                    </p-dropdown>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="telefone">Telefone</label>
+                        <input type="text" pInputText id="telefone" [(ngModel)]="pet.telefone"
+                            placeholder="(00) 90000-0000" required
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.telefone}" />
+                    </div>
+                    <div class="field col">
+                        <label for="cep">CEP</label>
+                        <input type="text" pInputText id="cep" [(ngModel)]="pet.cep" placeholder="00000-000" required
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.cep}" />
+                    </div>
                 </div>
-                <div class="field">
+                <!-- <div class="field">
                     <label for="description">Descrição</label>
-                    <textarea id="description" pInputTextarea [(ngModel)]="pet.description" required rows="3" cols="20"></textarea>
+                    <textarea id="description" pInputTextarea [(ngModel)]="pet.description" required rows="3"
+                        cols="20"></textarea>
                 </div>
 
                 <div class="field">
                     <label class="mb-3">Category</label>
                     <div class="formgrid grid">
                         <div class="field-radiobutton col-6">
-                            <p-radioButton id="category1" name="category" value="Accessories" [(ngModel)]="pet.category"></p-radioButton>
+                            <p-radioButton id="category1" name="category" value="Accessories"
+                                [(ngModel)]="pet.category"></p-radioButton>
                             <label for="category1">Accessories</label>
                         </div>
                         <div class="field-radiobutton col-6">
-                            <p-radioButton id="category2" name="category" value="Clothing" [(ngModel)]="pet.category"></p-radioButton>
+                            <p-radioButton id="category2" name="category" value="Clothing"
+                                [(ngModel)]="pet.category"></p-radioButton>
                             <label for="category2">Clothing</label>
                         </div>
                         <div class="field-radiobutton col-6">
-                            <p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="pet.category"></p-radioButton>
+                            <p-radioButton id="category3" name="category" value="Electronics"
+                                [(ngModel)]="pet.category"></p-radioButton>
                             <label for="category3">Electronics</label>
                         </div>
                         <div class="field-radiobutton col-6">
-                            <p-radioButton id="category4" name="category" value="Fitness" [(ngModel)]="pet.category"></p-radioButton>
+                            <p-radioButton id="category4" name="category" value="Fitness"
+                                [(ngModel)]="pet.category"></p-radioButton>
                             <label for="category4">Fitness</label>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="formgrid grid">
                     <div class="field col">
                         <label for="price">Price</label>
-                        <p-inputNumber id="price" [(ngModel)]="pet.price" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+                        <p-inputNumber id="price" [(ngModel)]="pet.price" mode="currency" currency="USD"
+                            locale="en-US"></p-inputNumber>
                     </div>
                     <div class="field col">
                         <label for="quantity">Quantity</label>
@@ -140,8 +178,10 @@
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="savePet()"></button>
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                    (click)="savePet()"></button>
             </ng-template>
         </p-dialog>
 
@@ -151,8 +191,10 @@
                 <span *ngIf="pet">Are you sure you want to delete <b>{{pet.name}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletePetDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deletePetDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDelete()"></button>
             </ng-template>
         </p-dialog>
 
@@ -162,8 +204,10 @@
                 <span>Are you sure you want to delete selected pets?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletePetsDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deletePetsDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDeleteSelected()"></button>
             </ng-template>
         </p-dialog>
     </div>

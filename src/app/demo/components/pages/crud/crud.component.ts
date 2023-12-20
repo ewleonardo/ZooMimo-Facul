@@ -28,7 +28,7 @@ export class CrudComponent implements OnInit {
 
     cols: any[] = [];
 
-    statuses: any[] = [];
+    sexoes: any[] = [];
 
     rowsPerPageOptions = [5, 10, 20];
 
@@ -42,14 +42,18 @@ export class CrudComponent implements OnInit {
             { field: 'price', header: 'Price' },
             { field: 'category', header: 'Category' },
             { field: 'rating', header: 'Reviews' },
-            { field: 'inventoryStatus', header: 'Status' }
+            { field: 'sexo', header: 'Status' }
         ];
 
-        this.statuses = [
+        this.sexoes = [
             { label: 'MASCULINO', value: 'masculino' },
             { label: 'FEMININO', value: 'feminino' },
             { label: 'OUTRO', value: 'outro' }
         ];
+
+        setTimeout(() => {
+            console.log(this.pets);
+        }, 3000);
     }
 
     openNew() {
@@ -76,14 +80,14 @@ export class CrudComponent implements OnInit {
         this.deletePetsDialog = false;
         // this.pets = this.pets.filter(val => !this.selectedPets.includes(val));
 
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Pets Deleted', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
         this.selectedPets = [];
     }
 
     confirmDelete() {
         this.deletePetDialog = false;
         // this.pets = this.pets.filter(val => val.id !== this.pet.id);
-        this.petService.deletePet(this.pet.id);
+        this.petService.deletePet(this.pet.key);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Pet Deleted', life: 3000 });
         this.pet = {};
     }
@@ -99,14 +103,15 @@ export class CrudComponent implements OnInit {
         if (this.pet.name?.trim()) {
             if (this.pet.id) {
                 // @ts-ignore
-                this.pet.inventoryStatus = this.pet.inventoryStatus.value ? this.pet.inventoryStatus.value : this.pet.inventoryStatus;
+                this.pet.sexo = this.pet.sexo.value ? this.pet.sexo.value : this.pet.sexo;
                 // this.pets[this.findIndexById(this.pet.id)] = this.pet;
-                this.petService.updatePet(this.pet.id, this.pet);
+                this.petService.updatePet(this.pet.key, this.pet);
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Pet Updated', life: 3000 });
             } else {
+                this.pet.id = this.createId();
                 this.petService.createPet(this.pet);
                 // @ts-ignore
-                this.pet.inventoryStatus = this.pet.inventoryStatus ? this.pet.inventoryStatus.value : 'INSTOCK';
+                this.pet.sexo = this.pet.sexo ? this.pet.sexo.value : 'INSTOCK';
                 // this.pets.push(this.pet);
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Pet Created', life: 3000 });
             }
