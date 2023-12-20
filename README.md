@@ -1,3 +1,15 @@
+# Comandos
+
+🔹 Instalação dos Packages ⤵
+```sh
+npm i
+```
+
+🔹 Ligar servidor da aplicação ⤵
+```sh
+npm start
+```
+
 # Sakai
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.4.
