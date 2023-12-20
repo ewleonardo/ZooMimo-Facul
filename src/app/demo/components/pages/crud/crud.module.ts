@@ -16,6 +16,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
+import { InputMaskModule } from 'primeng/inputmask';
 // import { AngularFireDatabase } from '@angular/fire/compat/database';
 // import { ProductService } from 'src/app/demo/service/product.service';
 
@@ -33,6 +34,7 @@ import { DialogModule } from 'primeng/dialog';
         ToastModule,
         ToolbarModule,
         RatingModule,
+        InputMaskModule,
         InputTextModule,
         InputTextareaModule,
         DropdownModule,

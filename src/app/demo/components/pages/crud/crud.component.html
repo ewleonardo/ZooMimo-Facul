@@ -41,10 +41,10 @@
                         </th> -->
                         <th pSortableColumn="code">Código <p-sortIcon field="code"></p-sortIcon></th>
                         <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
-                        <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
-                        <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th>
-                        <th pSortableColumn="sexo">Sexo <p-sortIcon field="sexo"></p-sortIcon>
+                        <th pSortableColumn="cpf">CPF <p-sortIcon field="cpf"></p-sortIcon></th>
+                        <th pSortableColumn="sexo">Sexo <p-sortIcon field="sexo"></p-sortIcon></th>
+                        <th pSortableColumn="estado">Estado <p-sortIcon field="estado"></p-sortIcon></th>
+                        <th pSortableColumn="cidade">Cidade <p-sortIcon field="cidade"></p-sortIcon>
                         </th>
                         <th></th>
                     </tr>
@@ -62,19 +62,18 @@
                             {{pet.name}}
                         </td>
                         <td style="width:14%; min-width:8rem;">
-                            <span class="p-column-title">Price</span>
-                            {{pet.price | currency:'USD'}}
+                            <span class="p-column-title">CPF</span>
+                            {{pet.cpf }}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Category</span>
-                            {{pet.category}}
+                            <span class="p-column-title">Sexo</span>
+                            {{pet.sexo}}
                         </td>
-                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Reviews</span>
-                            <p-rating [ngModel]="pet.rating" [readonly]="true" [cancel]="false"></p-rating>
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Estado</span>
+                            {{pet.estado}}
                         </td>
-                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Sexo</span>
-                            <span
-                                [class]="'product-badge sexo-' + (pet.sexo ? pet.sexo.toLowerCase() : '')">{{pet.sexo}}</span>
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Cidade</span>
+                            {{pet.cidade}}
                         </td>
                         <td>
                             <div class="flex">
@@ -102,13 +101,13 @@
                 <div class="formgrid grid">
                     <div class="field col">
                         <label for="cpf">CPF</label>
-                        <input type="text" pInputText id="cpf" [(ngModel)]="pet.cpf" placeholder="000.000.000-00"
-                            required [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.cpf}" />
+                        <p-inputMask mask="999.999.999-99" [(ngModel)]="pet.cpf"
+                            placeholder="000.000.000-00" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.cpf}"></p-inputMask>
                     </div>
                     <div class="field col">
                         <label for="sexo">Sexo</label>
                         <p-dropdown [(ngModel)]="pet.sexo" inputId="sexo" optionValue="label" [options]="sexoes"
-                            placeholder="Sexo">
+                            placeholder="Sexo" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.sexo}">
                             <ng-template pTemplate="selectedItem">
                                 <span *ngIf="pet && pet.sexo"
                                     [class]="'product-badge sexo-' + pet.sexo.toString().toLowerCase()">{{pet.sexo}}</span>
@@ -122,14 +121,12 @@
                 <div class="formgrid grid">
                     <div class="field col">
                         <label for="telefone">Telefone</label>
-                        <input type="text" pInputText id="telefone" [(ngModel)]="pet.telefone"
-                            placeholder="(00) 90000-0000" required
-                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.telefone}" />
+                        <p-inputMask mask="(99) 99999-9999" [(ngModel)]="pet.telefone"
+                            placeholder="(00) 90000-0000"></p-inputMask>
                     </div>
                     <div class="field col">
                         <label for="cep">CEP</label>
-                        <input type="text" pInputText id="cep" [(ngModel)]="pet.cep" placeholder="00000-000" required
-                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.cep}" />
+                        <p-inputMask mask="99999-999" [(ngModel)]="pet.cep" placeholder="00000-000"></p-inputMask>
                     </div>
                 </div>
                 <!-- <div class="field">
@@ -166,13 +163,31 @@
 
                 <div class="formgrid grid">
                     <div class="field col">
-                        <label for="price">Price</label>
-                        <p-inputNumber id="price" [(ngModel)]="pet.price" mode="currency" currency="USD"
-                            locale="en-US"></p-inputNumber>
+                        <label for="estado">Estado</label>
+                        <input type="text" pInputText id="estado" [(ngModel)]="pet.estado" required
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.estado}" />
                     </div>
                     <div class="field col">
-                        <label for="quantity">Quantity</label>
-                        <p-inputNumber id="quantity" [(ngModel)]="pet.quantity"></p-inputNumber>
+                        <label for="cidade">Cidade</label>
+                        <input type="text" pInputText id="cidade" [(ngModel)]="pet.cidade" required
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.cidade}" />
+                    </div>
+                    <div class="field col">
+                        <label for="bairro">Bairro</label>
+                        <input type="text" pInputText id="bairro" [(ngModel)]="pet.bairro" required
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.bairro}" />
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="rua">Rua</label>
+                        <input type="text" pInputText id="rua" [(ngModel)]="pet.rua" required
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.rua}" />
+                    </div>
+                    <div class="field col">
+                        <label for="numero">Número</label>
+                        <input type="text" pInputText id="numero" [(ngModel)]="pet.numero" required
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.numero}" />
                     </div>
                 </div>
             </ng-template>
