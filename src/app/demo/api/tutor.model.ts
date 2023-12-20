@@ -2,12 +2,11 @@ interface Sexo {
     label: string;
     value: string;
 }
-export interface Pet {
+export interface Tutor {
     id?: string;
     key?: string;
     code?: string;
     name?: string;
-    cep?: string;
     description?: string;
     price?: number;
     quantity?: number;

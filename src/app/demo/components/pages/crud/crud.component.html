@@ -96,18 +96,18 @@
                     <label for="name">Nome</label>
                     <input type="text" pInputText id="name" [(ngModel)]="pet.name" required autofocus
                         [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.name}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.name">Name is required.</small>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.name">Campo 'Nome' obrigatório.</small>
                 </div>
                 <div class="formgrid grid">
                     <div class="field col">
                         <label for="cpf">CPF</label>
-                        <p-inputMask mask="999.999.999-99" [(ngModel)]="pet.cpf"
-                            placeholder="000.000.000-00" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.cpf}"></p-inputMask>
+                        <p-inputMask mask="999.999.999-99" [(ngModel)]="pet.cpf" placeholder="000.000.000-00"
+                            required="true" name="cpf"></p-inputMask>
                     </div>
                     <div class="field col">
                         <label for="sexo">Sexo</label>
                         <p-dropdown [(ngModel)]="pet.sexo" inputId="sexo" optionValue="label" [options]="sexoes"
-                            placeholder="Sexo" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.sexo}">
+                            placeholder="Sexo">
                             <ng-template pTemplate="selectedItem">
                                 <span *ngIf="pet && pet.sexo"
                                     [class]="'product-badge sexo-' + pet.sexo.toString().toLowerCase()">{{pet.sexo}}</span>
@@ -126,76 +126,42 @@
                     </div>
                     <div class="field col">
                         <label for="cep">CEP</label>
-                        <p-inputMask mask="99999-999" [(ngModel)]="pet.cep" placeholder="00000-000"></p-inputMask>
+                        <p-inputMask mask="99999-999" [required]="true" (onBlur)="consultaCEP()" [(ngModel)]="pet.cep"
+                            placeholder="00000-000"></p-inputMask>
                     </div>
                 </div>
-                <!-- <div class="field">
-                    <label for="description">Descrição</label>
-                    <textarea id="description" pInputTextarea [(ngModel)]="pet.description" required rows="3"
-                        cols="20"></textarea>
-                </div>
-
-                <div class="field">
-                    <label class="mb-3">Category</label>
-                    <div class="formgrid grid">
-                        <div class="field-radiobutton col-6">
-                            <p-radioButton id="category1" name="category" value="Accessories"
-                                [(ngModel)]="pet.category"></p-radioButton>
-                            <label for="category1">Accessories</label>
-                        </div>
-                        <div class="field-radiobutton col-6">
-                            <p-radioButton id="category2" name="category" value="Clothing"
-                                [(ngModel)]="pet.category"></p-radioButton>
-                            <label for="category2">Clothing</label>
-                        </div>
-                        <div class="field-radiobutton col-6">
-                            <p-radioButton id="category3" name="category" value="Electronics"
-                                [(ngModel)]="pet.category"></p-radioButton>
-                            <label for="category3">Electronics</label>
-                        </div>
-                        <div class="field-radiobutton col-6">
-                            <p-radioButton id="category4" name="category" value="Fitness"
-                                [(ngModel)]="pet.category"></p-radioButton>
-                            <label for="category4">Fitness</label>
-                        </div>
-                    </div>
-                </div> -->
 
                 <div class="formgrid grid">
                     <div class="field col">
                         <label for="estado">Estado</label>
-                        <input type="text" pInputText id="estado" [(ngModel)]="pet.estado" required
-                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.estado}" />
+                        <input type="text" pInputText id="estado" [(ngModel)]="pet.estado" />
                     </div>
                     <div class="field col">
                         <label for="cidade">Cidade</label>
-                        <input type="text" pInputText id="cidade" [(ngModel)]="pet.cidade" required
-                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.cidade}" />
+                        <input type="text" pInputText id="cidade" [(ngModel)]="pet.cidade" />
                     </div>
                     <div class="field col">
                         <label for="bairro">Bairro</label>
-                        <input type="text" pInputText id="bairro" [(ngModel)]="pet.bairro" required
-                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.bairro}" />
+                        <input type="text" pInputText id="bairro" [(ngModel)]="pet.bairro" />
                     </div>
                 </div>
                 <div class="formgrid grid">
                     <div class="field col">
                         <label for="rua">Rua</label>
-                        <input type="text" pInputText id="rua" [(ngModel)]="pet.rua" required
-                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.rua}" />
+                        <input type="text" pInputText id="rua" [(ngModel)]="pet.rua" />
                     </div>
                     <div class="field col">
                         <label for="numero">Número</label>
-                        <input type="text" pInputText id="numero" [(ngModel)]="pet.numero" required
-                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.numero}" />
+                        <input type="text" pInputText id="numero" [(ngModel)]="pet.numero" />
+                        <!-- [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.numero}" -->
                     </div>
                 </div>
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
                     (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text"
                     (click)="savePet()"></button>
             </ng-template>
         </p-dialog>

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/demo/api/product';
 import { Pet } from 'src/app/demo/api/pet.model';
+import { Tutor } from 'src/app/demo/api/tutor.model';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { PetService } from 'src/app/demo/service/pet.service';
+import { TutorService } from 'src/app/demo/service/tutor.service';
 
 @Component({
     templateUrl: './crud.component.html',
@@ -145,5 +147,14 @@ export class CrudComponent implements OnInit {
 
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
+
+    consultaCEP() {
+        var cep = this.pet.cep;
+
+
+
+        console.log(cep);
+
     }
 }
