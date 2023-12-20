@@ -17,12 +17,18 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
+import { BrowserModule } from "@angular/platform-browser";
+// import { NgModule } from "@angular/core";
+import { NgxViacepModule } from "@brunoc/ngx-viacep"; // Importando o módulo
+import { AppComponent } from 'src/app/app.component';
 
 // import { AngularFireDatabase } from '@angular/fire/compat/database';
 // import { ProductService } from 'src/app/demo/service/product.service';
 
 @NgModule({
     imports: [
+        // BrowserModule,
+        NgxViacepModule, // Registrando o módulo
         CommonModule,
         CrudRoutingModule,
         TableModule,

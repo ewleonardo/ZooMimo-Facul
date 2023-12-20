@@ -102,7 +102,7 @@
                     <div class="field col">
                         <label for="cpf">CPF</label>
                         <p-inputMask mask="999.999.999-99" [(ngModel)]="pet.cpf" placeholder="000.000.000-00"
-                            required="true" name="cpf"></p-inputMask>
+                            name="cpf"></p-inputMask>
                     </div>
                     <div class="field col">
                         <label for="sexo">Sexo</label>
@@ -126,36 +126,38 @@
                     </div>
                     <div class="field col">
                         <label for="cep">CEP</label>
-                        <p-inputMask mask="99999-999" [required]="true" (onBlur)="consultaCEP()" [(ngModel)]="pet.cep"
+                        <p-inputMask mask="99999-999" (onBlur)="consultaCEP($event.target.value, f)" [(ngModel)]="pet.cep"
                             placeholder="00000-000"></p-inputMask>
                     </div>
                 </div>
 
-                <div class="formgrid grid">
-                    <div class="field col">
-                        <label for="estado">Estado</label>
-                        <input type="text" pInputText id="estado" [(ngModel)]="pet.estado" />
+                <form #f="ngForm">
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="estado">Estado</label>
+                            <p-inputMask mask="aa" id="estado" name="estado" [(ngModel)]="pet.estado"></p-inputMask>
+                        </div>
+                        <div class="field col">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" pInputText id="cidade" name="cidade" [(ngModel)]="pet.cidade" />
+                        </div>
+                        <div class="field col">
+                            <label for="bairro">Bairro</label>
+                            <input type="text" pInputText id="bairro" name="bairro" [(ngModel)]="pet.bairro" />
+                        </div>
                     </div>
-                    <div class="field col">
-                        <label for="cidade">Cidade</label>
-                        <input type="text" pInputText id="cidade" [(ngModel)]="pet.cidade" />
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="rua">Rua</label>
+                            <input type="text" pInputText id="rua" name="rua" [(ngModel)]="pet.rua" />
+                        </div>
+                        <div class="field col">
+                            <label for="numero">Número</label>
+                            <input type="text" pInputText id="numero" name="numero" [(ngModel)]="pet.numero" />
+                            <!-- [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.numero}" -->
+                        </div>
                     </div>
-                    <div class="field col">
-                        <label for="bairro">Bairro</label>
-                        <input type="text" pInputText id="bairro" [(ngModel)]="pet.bairro" />
-                    </div>
-                </div>
-                <div class="formgrid grid">
-                    <div class="field col">
-                        <label for="rua">Rua</label>
-                        <input type="text" pInputText id="rua" [(ngModel)]="pet.rua" />
-                    </div>
-                    <div class="field col">
-                        <label for="numero">Número</label>
-                        <input type="text" pInputText id="numero" [(ngModel)]="pet.numero" />
-                        <!-- [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.numero}" -->
-                    </div>
-                </div>
+                </form>
             </ng-template>
 
             <ng-template pTemplate="footer">

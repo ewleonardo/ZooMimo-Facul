@@ -7,11 +7,14 @@ import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { PetService } from 'src/app/demo/service/pet.service';
 import { TutorService } from 'src/app/demo/service/tutor.service';
+import { CEPError, Endereco, NgxViacepService } from "@brunoc/ngx-viacep"; // Importando o viacep
+import { catchError, EMPTY } from 'rxjs';
 
 @Component({
     templateUrl: './crud.component.html',
     providers: [MessageService]
 })
+
 export class CrudComponent implements OnInit {
 
     petDialog: boolean = false;
@@ -34,7 +37,7 @@ export class CrudComponent implements OnInit {
 
     rowsPerPageOptions = [5, 10, 20];
 
-    constructor(private petService: PetService, private messageService: MessageService) { }
+    constructor(private viacep: NgxViacepService, private petService: PetService, private messageService: MessageService) { }
 
     ngOnInit() {
         this.petService.getPets().subscribe(data => this.pets = data);
@@ -149,12 +152,37 @@ export class CrudComponent implements OnInit {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
 
-    consultaCEP() {
-        var cep = this.pet.cep;
+    consultaCEP(cep, form) {
+        cep = cep.replace(/\D/g, '');
+        // var validacep = /^[0-9]{8}$/;
+        this.viacep
+            .buscarPorCep(cep)
+            .pipe(
+                catchError((error: CEPError) => {
+                    // Ocorreu algum erro :/
+                    console.log(error.message);
+                    return EMPTY;
+                })
+            )
+            .subscribe((endereco: Endereco) => {
+                // Endereço retornado :)
+                // console.log(endereco);
+                this.popularForm(endereco, form);
+            });
 
+    }
 
+    popularForm(endereco, form) {
+        console.log(endereco, 'CHEGOU NO POPULAR!');
+        form.setValue({
+            // endereco: {
+                estado: endereco.uf,
+                cidade: endereco.localidade,
+                bairro: endereco.bairro,
+                rua: endereco.logradouro,
+            // }
 
-        console.log(cep);
+        })
 
     }
 }
